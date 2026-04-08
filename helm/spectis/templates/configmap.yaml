@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "spectis.fullname" . }}
+  labels:
+    {{- include "spectis.labels" . | nindent 4 }}
+data:
+  JWT_EXPIRE_MINUTES: {{ .Values.config.jwtExpireMinutes | quote }}
+  LOG_LEVEL: {{ .Values.config.logLevel | quote }}
+  CORS_ORIGINS: {{ .Values.config.corsOrigins | quote }}
+  AUDIT_LOG_DIR: {{ .Values.config.auditLogDir | quote }}
+  API_HOST: "0.0.0.0"
+  API_PORT: "8000"

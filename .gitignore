@@ -1,0 +1,54 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+dist/
+build/
+.eggs/
+*.egg
+.venv/
+venv/
+env/
+
+# Node
+node_modules/
+dashboard/dist/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Environment
+.env
+.env.local
+.env.*.local
+
+# Logs
+orchestrator/logs/*.jsonl
+*.log
+
+# Database
+*.db
+*.sqlite3
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Docker
+.docker/
+
+# Pytest
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Alembic
+orchestrator/alembic/versions/*.pyc
+
+# Built dashboard (generated)
+orchestrator/app/static/*
+!orchestrator/app/static/.gitkeep

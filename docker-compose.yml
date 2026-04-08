@@ -1,0 +1,38 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_DB: spectis
+      POSTGRES_USER: spectis
+      POSTGRES_PASSWORD: spectis
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U spectis"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+
+  orchestrator:
+    build:
+      context: .
+      dockerfile: orchestrator/Dockerfile
+    ports:
+      - "8000:8000"
+    environment:
+      DATABASE_URL: postgresql+asyncpg://spectis:spectis@postgres:5432/spectis
+      JWT_SECRET_KEY: dev-secret-change-in-production
+      JWT_EXPIRE_MINUTES: "60"
+      AUDIT_LOG_DIR: /app/logs
+      CORS_ORIGINS: "http://localhost:3000,http://localhost:5173,http://localhost:8000"
+    depends_on:
+      postgres:
+        condition: service_healthy
+    volumes:
+      - audit_logs:/app/logs
+
+volumes:
+  pgdata:
+  audit_logs:

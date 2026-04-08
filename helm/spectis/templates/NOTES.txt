@@ -1,0 +1,32 @@
+Spectis has been deployed!
+
+1. Get the application URL:
+{{- if .Values.ingress.enabled }}
+{{- range $host := .Values.ingress.hosts }}
+  http{{ if $.Values.ingress.tls }}s{{ end }}://{{ $host.host }}
+{{- end }}
+{{- else if contains "NodePort" .Values.service.type }}
+  export NODE_PORT=$(kubectl get --namespace {{ .Release.Namespace }} -o jsonpath="{.spec.ports[0].nodePort}" services {{ include "spectis.fullname" . }})
+  export NODE_IP=$(kubectl get nodes --namespace {{ .Release.Namespace }} -o jsonpath="{.items[0].status.addresses[0].address}")
+  echo http://$NODE_IP:$NODE_PORT
+{{- else if contains "ClusterIP" .Values.service.type }}
+  kubectl --namespace {{ .Release.Namespace }} port-forward svc/{{ include "spectis.fullname" . }} 8000:{{ .Values.service.port }}
+  echo "Dashboard: http://localhost:8000"
+{{- end }}
+
+2. Register your first admin user:
+  curl -X POST http://localhost:8000/api/auth/register \
+    -H "Content-Type: application/json" \
+    -d '{"username":"admin","email":"admin@example.com","password":"changeme","role":"admin"}'
+
+3. Get a JWT token:
+  curl -X POST http://localhost:8000/api/auth/login \
+    -H "Content-Type: application/json" \
+    -d '{"username":"admin","password":"changeme"}'
+
+4. Install the endpoint agent on developer workstations:
+  pip install spectis-agent
+  spectis-agent scan --orchestrator-url http://<spectis-url>:8000
+
+IMPORTANT: Change the JWT secret key in production!
+  helm upgrade {{ .Release.Name }} spectis --set secrets.jwtSecretKey=$(openssl rand -base64 32)

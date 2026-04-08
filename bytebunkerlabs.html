@@ -1,0 +1,715 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ByteBunker Labs — AI Observability for Enterprise Security</title>
+<meta name="description" content="See every agent. Know every action. Trust every outcome. ByteBunker Labs builds security tools for the agentic AI era.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@400;500;600;700&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+:root {
+  --phthalo: #0B3D2E;
+  --phthalo-deep: #072A1F;
+  --phthalo-mid: #14705C;
+  --phthalo-light: #1A8F74;
+  --phthalo-wash: #E6F5F0;
+  --phthalo-ghost: #F3FAF7;
+  --cream: #FAFBF9;
+  --white: #FFFFFF;
+  --text: #1A1A1A;
+  --text-secondary: #5A5A5A;
+  --text-tertiary: #8A8A8A;
+  --border: #E2E5E0;
+  --font-display: 'Chakra Petch', sans-serif;
+  --font-body: 'DM Sans', sans-serif;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: var(--font-body);
+  background: var(--cream);
+  color: var(--text);
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+/* ─── NAV ─── */
+nav {
+  position: fixed; top: 0; width: 100%; z-index: 100;
+  background: rgba(250,251,249,0.85);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--border);
+  transition: all 0.3s;
+}
+nav .inner {
+  max-width: 1200px; margin: 0 auto;
+  padding: 16px 40px;
+  display: flex; justify-content: space-between; align-items: center;
+}
+.logo {
+  font-family: var(--font-display);
+  font-weight: 600; font-size: 18px;
+  color: var(--phthalo);
+  text-decoration: none;
+  letter-spacing: -0.02em;
+  display: flex; align-items: center; gap: 10px;
+}
+.logo-mark {
+  width: 28px; height: 28px;
+  background: var(--phthalo);
+  border-radius: 6px;
+  display: flex; align-items: center; justify-content: center;
+}
+.logo-mark svg { width: 16px; height: 16px; }
+nav ul {
+  list-style: none; display: flex; gap: 32px; align-items: center;
+}
+nav ul li a {
+  font-family: var(--font-body);
+  font-size: 14px; font-weight: 500;
+  color: var(--text-secondary);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+nav ul li a:hover { color: var(--phthalo); }
+.nav-cta {
+  background: var(--phthalo) !important;
+  color: var(--white) !important;
+  padding: 8px 20px !important;
+  border-radius: 6px;
+  font-size: 13px !important;
+  font-weight: 600 !important;
+  transition: background 0.2s !important;
+}
+.nav-cta:hover { background: var(--phthalo-deep) !important; }
+
+/* ─── HERO ─── */
+.hero {
+  min-height: 100vh;
+  display: flex; align-items: center;
+  padding: 120px 40px 80px;
+  position: relative;
+}
+.hero .inner {
+  max-width: 1200px; margin: 0 auto; width: 100%;
+  display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center;
+}
+.hero-text h1 {
+  font-family: var(--font-display);
+  font-size: 56px; font-weight: 700;
+  line-height: 1.05;
+  letter-spacing: -0.03em;
+  color: var(--phthalo-deep);
+  margin-bottom: 24px;
+}
+.hero-text h1 span {
+  display: block;
+  background: linear-gradient(135deg, var(--phthalo), var(--phthalo-light));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.hero-text .subtitle {
+  font-size: 18px; line-height: 1.7;
+  color: var(--text-secondary);
+  max-width: 480px;
+  margin-bottom: 36px;
+}
+.hero-actions { display: flex; gap: 16px; align-items: center; }
+.btn-primary {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: var(--phthalo);
+  color: var(--white);
+  padding: 14px 28px;
+  border-radius: 8px;
+  font-family: var(--font-display);
+  font-size: 15px; font-weight: 600;
+  text-decoration: none;
+  transition: all 0.2s;
+  border: none; cursor: pointer;
+}
+.btn-primary:hover { background: var(--phthalo-deep); transform: translateY(-1px); }
+.btn-secondary {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: transparent;
+  color: var(--phthalo);
+  padding: 14px 28px;
+  border-radius: 8px;
+  font-family: var(--font-display);
+  font-size: 15px; font-weight: 600;
+  text-decoration: none;
+  border: 1.5px solid var(--phthalo);
+  transition: all 0.2s;
+}
+.btn-secondary:hover { background: var(--phthalo-wash); }
+
+/* Hero visual */
+.hero-visual {
+  position: relative;
+  background: var(--phthalo-deep);
+  border-radius: 16px;
+  padding: 32px;
+  overflow: hidden;
+  box-shadow: 0 24px 80px rgba(11,61,46,0.15), 0 0 0 1px rgba(11,61,46,0.08);
+}
+.terminal-bar {
+  display: flex; gap: 6px; margin-bottom: 20px;
+}
+.terminal-dot { width: 10px; height: 10px; border-radius: 50%; }
+.terminal-dot:nth-child(1) { background: #ff5f57; }
+.terminal-dot:nth-child(2) { background: #febc2e; }
+.terminal-dot:nth-child(3) { background: #28c840; }
+.terminal-code {
+  font-family: 'JetBrains Mono', 'Fira Code', 'SF Mono', monospace;
+  font-size: 13px; line-height: 1.8;
+  color: rgba(255,255,255,0.7);
+}
+.terminal-code .prompt { color: var(--phthalo-light); }
+.terminal-code .flag { color: #7DD3C0; }
+.terminal-code .str { color: #A8E6CF; }
+.terminal-code .num { color: #FFD3A8; }
+.terminal-code .alert { color: #FF8A80; }
+.terminal-code .ok { color: #69F0AE; }
+.terminal-code .dim { color: rgba(255,255,255,0.35); }
+.terminal-code .line { display: block; }
+
+/* ─── BADGE ROW ─── */
+.trust-bar {
+  padding: 40px 40px;
+  background: var(--white);
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+}
+.trust-bar .inner {
+  max-width: 1200px; margin: 0 auto;
+  display: flex; justify-content: center; align-items: center; gap: 48px;
+  flex-wrap: wrap;
+}
+.trust-item {
+  font-family: var(--font-display);
+  font-size: 13px; font-weight: 500;
+  color: var(--text-tertiary);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  display: flex; align-items: center; gap: 8px;
+}
+.trust-dot {
+  width: 8px; height: 8px;
+  background: var(--phthalo-mid);
+  border-radius: 50%;
+  opacity: 0.6;
+}
+
+/* ─── PROBLEM SECTION ─── */
+.section {
+  padding: 120px 40px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+.section-label {
+  font-family: var(--font-display);
+  font-size: 12px; font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--phthalo-mid);
+  margin-bottom: 16px;
+}
+.section-title {
+  font-family: var(--font-display);
+  font-size: 40px; font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1.15;
+  color: var(--phthalo-deep);
+  max-width: 640px;
+  margin-bottom: 20px;
+}
+.section-subtitle {
+  font-size: 17px; line-height: 1.7;
+  color: var(--text-secondary);
+  max-width: 600px;
+  margin-bottom: 56px;
+}
+
+/* Three planes grid */
+.planes-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px;
+}
+.plane-card {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 32px 28px;
+  transition: all 0.25s;
+  position: relative;
+  overflow: hidden;
+}
+.plane-card::before {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0;
+  height: 3px;
+  background: var(--phthalo);
+  opacity: 0;
+  transition: opacity 0.25s;
+}
+.plane-card:hover { border-color: var(--phthalo-mid); transform: translateY(-2px); box-shadow: 0 8px 32px rgba(11,61,46,0.08); }
+.plane-card:hover::before { opacity: 1; }
+.plane-icon {
+  width: 40px; height: 40px;
+  background: var(--phthalo-wash);
+  border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+  margin-bottom: 20px;
+  color: var(--phthalo);
+  font-size: 18px;
+}
+.plane-card h3 {
+  font-family: var(--font-display);
+  font-size: 17px; font-weight: 600;
+  color: var(--text);
+  margin-bottom: 10px;
+}
+.plane-card p {
+  font-size: 14px; line-height: 1.65;
+  color: var(--text-secondary);
+}
+.plane-card .blind {
+  margin-top: 16px;
+  padding: 8px 12px;
+  background: #FFF5F5;
+  border-radius: 6px;
+  font-size: 12px; font-weight: 500;
+  color: #C53030;
+}
+
+/* ─── PRODUCT ─── */
+.product-section {
+  background: var(--white);
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+}
+.features-grid {
+  display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px;
+}
+.feature-card {
+  padding: 28px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--cream);
+  transition: border-color 0.2s;
+}
+.feature-card:hover { border-color: var(--phthalo-mid); }
+.feature-card h3 {
+  font-family: var(--font-display);
+  font-size: 15px; font-weight: 600;
+  color: var(--phthalo-deep);
+  margin-bottom: 8px;
+}
+.feature-card p {
+  font-size: 14px; line-height: 1.6;
+  color: var(--text-secondary);
+}
+
+/* ─── ARCHITECTURE ─── */
+.arch-visual {
+  background: var(--phthalo-deep);
+  border-radius: 14px;
+  padding: 48px;
+  color: rgba(255,255,255,0.85);
+  margin-top: 48px;
+  font-family: var(--font-display);
+  overflow-x: auto;
+}
+.arch-visual pre {
+  font-family: 'JetBrains Mono', 'Fira Code', monospace;
+  font-size: 13px; line-height: 1.7;
+  white-space: pre;
+  color: rgba(255,255,255,0.6);
+}
+.arch-visual pre .hl { color: var(--phthalo-light); font-weight: 500; }
+.arch-visual pre .acc { color: #A8E6CF; }
+.arch-visual pre .dim { color: rgba(255,255,255,0.3); }
+
+/* ─── PAPER ─── */
+.paper-section { background: var(--phthalo-ghost); }
+.paper-card {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 48px;
+  display: grid; grid-template-columns: 1fr 1fr; gap: 48px;
+  align-items: center;
+}
+.paper-card h3 {
+  font-family: var(--font-display);
+  font-size: 24px; font-weight: 700;
+  color: var(--phthalo-deep);
+  line-height: 1.25;
+  margin-bottom: 16px;
+  letter-spacing: -0.02em;
+}
+.paper-card p {
+  font-size: 15px; line-height: 1.7;
+  color: var(--text-secondary);
+  margin-bottom: 24px;
+}
+.paper-meta {
+  display: flex; gap: 24px;
+  flex-wrap: wrap;
+}
+.paper-meta-item {
+  font-size: 12px; color: var(--text-tertiary);
+  font-family: var(--font-display);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+.paper-meta-item span { color: var(--text); font-weight: 600; display: block; font-size: 14px; text-transform: none; letter-spacing: 0; }
+.paper-visual {
+  background: var(--phthalo-wash);
+  border-radius: 10px;
+  padding: 32px;
+  border: 1px solid rgba(11,61,46,0.1);
+}
+.paper-visual .table-title {
+  font-family: var(--font-display);
+  font-size: 12px; font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--phthalo);
+  margin-bottom: 16px;
+}
+.paper-visual table {
+  width: 100%; border-collapse: collapse;
+  font-size: 13px;
+}
+.paper-visual th {
+  text-align: left;
+  padding: 8px 10px;
+  font-family: var(--font-display);
+  font-weight: 600; font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--phthalo);
+  border-bottom: 1.5px solid rgba(11,61,46,0.2);
+}
+.paper-visual td {
+  padding: 7px 10px;
+  border-bottom: 1px solid rgba(11,61,46,0.08);
+  color: var(--text-secondary);
+  font-size: 12px;
+}
+.paper-visual td:first-child { font-weight: 500; color: var(--text); }
+.check { color: var(--phthalo-mid); font-weight: 700; }
+.cross { color: #CCC; }
+
+/* ─── CTA ─── */
+.cta-section {
+  text-align: center;
+  padding: 120px 40px;
+  background: var(--phthalo-deep);
+  color: var(--white);
+}
+.cta-section h2 {
+  font-family: var(--font-display);
+  font-size: 40px; font-weight: 700;
+  letter-spacing: -0.03em;
+  margin-bottom: 16px;
+}
+.cta-section p {
+  font-size: 17px; color: rgba(255,255,255,0.65);
+  max-width: 500px; margin: 0 auto 36px;
+  line-height: 1.65;
+}
+.btn-light {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: var(--white);
+  color: var(--phthalo-deep);
+  padding: 14px 32px;
+  border-radius: 8px;
+  font-family: var(--font-display);
+  font-size: 15px; font-weight: 600;
+  text-decoration: none;
+  transition: all 0.2s;
+  margin: 0 8px;
+}
+.btn-light:hover { transform: translateY(-1px); box-shadow: 0 8px 24px rgba(0,0,0,0.2); }
+.btn-ghost {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: transparent;
+  color: var(--white);
+  padding: 14px 32px;
+  border-radius: 8px;
+  font-family: var(--font-display);
+  font-size: 15px; font-weight: 600;
+  text-decoration: none;
+  border: 1.5px solid rgba(255,255,255,0.3);
+  transition: all 0.2s;
+  margin: 0 8px;
+}
+.btn-ghost:hover { border-color: rgba(255,255,255,0.6); background: rgba(255,255,255,0.05); }
+
+/* ─── FOOTER ─── */
+footer {
+  padding: 48px 40px;
+  border-top: 1px solid var(--border);
+  background: var(--cream);
+}
+footer .inner {
+  max-width: 1200px; margin: 0 auto;
+  display: flex; justify-content: space-between; align-items: center;
+}
+footer .left {
+  font-family: var(--font-display);
+  font-size: 14px; font-weight: 500;
+  color: var(--text-tertiary);
+}
+footer .links { display: flex; gap: 24px; }
+footer .links a {
+  font-size: 13px; color: var(--text-tertiary);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+footer .links a:hover { color: var(--phthalo); }
+
+/* ─── RESPONSIVE ─── */
+@media (max-width: 900px) {
+  .hero .inner { grid-template-columns: 1fr; gap: 48px; }
+  .hero-text h1 { font-size: 40px; }
+  .planes-grid { grid-template-columns: 1fr; }
+  .features-grid { grid-template-columns: 1fr; }
+  .paper-card { grid-template-columns: 1fr; }
+  nav ul { gap: 16px; }
+}
+@media (max-width: 600px) {
+  .hero { padding: 100px 20px 60px; }
+  .section { padding: 80px 20px; }
+  .hero-text h1 { font-size: 32px; }
+  .section-title { font-size: 28px; }
+  nav .inner { padding: 12px 20px; }
+  .trust-bar .inner { gap: 24px; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="inner">
+    <a href="/" class="logo">
+      <div class="logo-mark">
+        <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+      </div>
+      ByteBunker Labs
+    </a>
+    <ul>
+      <li><a href="#problem">Problem</a></li>
+      <li><a href="#product">Spectis</a></li>
+      <li><a href="#research">Research</a></li>
+      <li><a href="https://github.com/bytebunkerlabs/spectis" class="nav-cta">GitHub</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="inner">
+    <div class="hero-text">
+      <h1>
+        Enterprise AI
+        <span>is a blind spot.</span>
+      </h1>
+      <p class="subtitle">
+        AI agents operate across three planes that no single security tool can see. ByteBunker Labs builds observability for the agentic era.
+      </p>
+      <div class="hero-actions">
+        <a href="https://github.com/bytebunkerlabs/spectis" class="btn-primary">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+          View on GitHub
+        </a>
+        <a href="#research" class="btn-secondary">Read the paper</a>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <div class="terminal-bar">
+        <div class="terminal-dot"></div>
+        <div class="terminal-dot"></div>
+        <div class="terminal-dot"></div>
+      </div>
+      <div class="terminal-code">
+        <span class="line"><span class="prompt">$</span> Invoke-MCPScan <span class="flag">-ApprovedServers</span> registry.json</span>
+        <span class="line dim">                                                      </span>
+        <span class="line"><span class="dim">[1/4]</span> Scanning AI client configs...</span>
+        <span class="line">  <span class="ok">[+]</span> VSCode-Copilot <span class="dim">(User)</span> &mdash; 3 servers</span>
+        <span class="line">  <span class="ok">[+]</span> Claude-Code <span class="dim">(Global)</span> &mdash; 2 servers</span>
+        <span class="line">  <span class="ok">[+]</span> Cursor <span class="dim">(User)</span> &mdash; 2 servers</span>
+        <span class="line"><span class="dim">[2/4]</span> Scanning workspaces...</span>
+        <span class="line">  <span class="ok">[+]</span> Found <span class="num">3</span> project-level configs</span>
+        <span class="line"><span class="dim">[3/4]</span> Scanning processes...</span>
+        <span class="line">  <span class="alert">[!]</span> <span class="alert">PID 22890: python.exe (Codex CLI)</span></span>
+        <span class="line">  <span class="alert">[!]</span> <span class="alert">shadow-mcp connecting to external API</span></span>
+        <span class="line"><span class="dim">[4/4]</span> Network listeners...</span>
+        <span class="line dim">                                                      </span>
+        <span class="line"><span class="str">RESULTS</span>  Servers: <span class="num">10</span>  Approved: <span class="ok">7</span>  Unapproved: <span class="alert">3</span></span>
+        <span class="line"><span class="alert">HIGH RISK: 1 shadow agent detected</span></span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TRUST BAR -->
+<div class="trust-bar">
+  <div class="inner">
+    <div class="trust-item"><div class="trust-dot"></div>Open Source Core</div>
+    <div class="trust-item"><div class="trust-dot"></div>Vendor Neutral</div>
+    <div class="trust-item"><div class="trust-dot"></div>Zero Latency Impact</div>
+    <div class="trust-item"><div class="trust-dot"></div>SIEM Native</div>
+    <div class="trust-item"><div class="trust-dot"></div>Three-Plane Coverage</div>
+  </div>
+</div>
+
+<!-- PROBLEM -->
+<section class="section" id="problem">
+  <div class="section-label">The Problem</div>
+  <h2 class="section-title">No security tool sees all three planes of AI agent activity</h2>
+  <p class="section-subtitle">
+    AI agents operate across external APIs, internal networks, and local endpoints. SASE sees the first. MCP gateways see part of the second. Nobody sees the third. That gap is where shadow agents live.
+  </p>
+  <div class="planes-grid">
+    <div class="plane-card">
+      <div class="plane-icon">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg>
+      </div>
+      <h3>External API plane</h3>
+      <p>Calls to model providers &mdash; OpenAI, Anthropic, Google. Your SASE platform sees opaque HTTPS traffic but can't read prompts, tool calls, or agent decisions.</p>
+      <div class="blind">Zscaler sees the connection, not the conversation</div>
+    </div>
+    <div class="plane-card">
+      <div class="plane-icon">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="8" rx="2"/><rect x="2" y="14" width="20" height="8" rx="2"/><circle cx="6" cy="6" r="1" fill="currentColor"/><circle cx="6" cy="18" r="1" fill="currentColor"/></svg>
+      </div>
+      <h3>Internal network plane</h3>
+      <p>MCP servers talking to databases, Active Directory, Splunk. This traffic is bypassed from SASE inspection to avoid latency. It's completely unmonitored.</p>
+      <div class="blind">Most sensitive AI traffic, zero visibility</div>
+    </div>
+    <div class="plane-card">
+      <div class="plane-icon">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M9 9h6v6H9z"/><path d="M9 1v3M15 1v3M9 20v3M15 20v3M20 9h3M20 14h3M1 9h3M1 14h3"/></svg>
+      </div>
+      <h3>Endpoint plane</h3>
+      <p>Process-to-process stdio communication, config files, agent instructions. Entirely local to the workstation. Invisible to every network tool.</p>
+      <div class="blind">Where shadow agents are born and hide</div>
+    </div>
+  </div>
+</section>
+
+<!-- PRODUCT -->
+<section class="section product-section" id="product">
+  <div style="max-width:1200px;margin:0 auto;padding:120px 0;">
+    <div class="section-label">Spectis</div>
+    <h2 class="section-title">See every agent. Know every action. Trust every outcome.</h2>
+    <p class="section-subtitle">
+      Spectis is a telemetry and correlation layer &mdash; not a gateway, not a proxy. It observes without intercepting, correlates across all three planes, and ships intelligence to your existing SIEM.
+    </p>
+    <div class="features-grid">
+      <div class="feature-card">
+        <h3>Endpoint agent</h3>
+        <p>Scans MCP configs across 7 AI clients (VS Code, Cursor, Claude, Codex, Windsurf), detects running MCP processes, finds shadow servers. Deploys via Intune or GPO.</p>
+      </div>
+      <div class="feature-card">
+        <h3>Agent identity + registry</h3>
+        <p>Every agent gets a registered identity with scoped permissions. Every action is attributed to both the agent and the human who triggered it. Full delegation chain.</p>
+      </div>
+      <div class="feature-card">
+        <h3>Safety LLM</h3>
+        <p>Async behavioral analysis that catches what rules miss: reconnaissance patterns, data exfiltration via read-only access, prompt injection, and privilege creep across sessions.</p>
+      </div>
+      <div class="feature-card">
+        <h3>SIEM-native correlation</h3>
+        <p>Ships structured telemetry to Splunk, Sentinel, and Defender. Correlates endpoint state + agent identity + tool calls + network traffic using shared identity keys.</p>
+      </div>
+    </div>
+
+    <div class="arch-visual">
+      <pre>
+<span class="hl">Developers + AI Clients</span>
+<span class="dim">  VS Code    Cursor    Claude Code    Codex CLI    Windsurf</span>
+      <span class="dim">│          │           │             │            │</span>
+      <span class="dim">▼          ▼           ▼             ▼            ▼</span>
+<span class="hl">┌─────────────────────────────────────────────────────────────┐</span>
+<span class="hl">│</span>  <span class="acc">Spectis Correlation Engine</span>                              <span class="hl">│</span>
+<span class="hl">│</span>  <span class="dim">Joins by: username x hostname x timestamp x agent_id</span>      <span class="hl">│</span>
+<span class="hl">├──────────────┬──────────────┬────────────┬─────────────────┤</span>
+<span class="hl">│</span> <span class="acc">Endpoint</span>     <span class="hl">│</span> <span class="acc">Orchestrator</span> <span class="hl">│</span> <span class="acc">Provider</span>   <span class="hl">│</span> <span class="acc">Network</span>          <span class="hl">│</span>
+<span class="hl">│</span> <span class="dim">Config scan</span>  <span class="hl">│</span> <span class="dim">Agent ID</span>     <span class="hl">│</span> <span class="dim">API logs</span>   <span class="hl">│</span> <span class="dim">Zscaler/FW</span>       <span class="hl">│</span>
+<span class="hl">│</span> <span class="dim">Process mon</span>  <span class="hl">│</span> <span class="dim">User ID</span>      <span class="hl">│</span> <span class="dim">Token use</span>  <span class="hl">│</span> <span class="dim">DNS logs</span>         <span class="hl">│</span>
+<span class="hl">│</span> <span class="dim">Net listen</span>   <span class="hl">│</span> <span class="dim">Tool calls</span>   <span class="hl">│</span>            <span class="hl">│</span>                 <span class="hl">│</span>
+<span class="hl">└──────────────┴──────────────┴────────────┴─────────────────┘</span>
+      <span class="dim">│</span>
+      <span class="dim">▼</span>
+<span class="hl">  Splunk  ·  Sentinel  ·  Defender  ·  Dashboard</span>
+      </pre>
+    </div>
+  </div>
+</section>
+
+<!-- RESEARCH -->
+<section class="section paper-section" id="research">
+  <div style="max-width:1200px;margin:0 auto;padding:120px 0;">
+    <div class="section-label">Research</div>
+    <h2 class="section-title">The Three-Plane Blind Spot</h2>
+    <p class="section-subtitle">Our whitepaper presents the first systematic mapping of MCP configuration paths across all major AI clients and a formal agent identity model for enterprise security.</p>
+    <div class="paper-card">
+      <div>
+        <h3>The Three-Plane Blind Spot: Why Enterprise Security Cannot See AI Agents</h3>
+        <p>We demonstrate that SASE, MCP gateway, and EDR tools each cover at most one plane of AI agent activity. We present Spectis and evaluate it against a production enterprise environment.</p>
+        <div class="paper-meta">
+          <div class="paper-meta-item">Author <span>Mohammed Ashraf</span></div>
+          <div class="paper-meta-item">Date <span>April 2026</span></div>
+          <div class="paper-meta-item">Category <span>cs.CR, cs.AI</span></div>
+        </div>
+        <br>
+        <a href="#" class="btn-primary" style="display:inline-flex;">Read the whitepaper</a>
+      </div>
+      <div class="paper-visual">
+        <div class="table-title">Visibility by tool category</div>
+        <table>
+          <tr><th>Tool</th><th>API</th><th>Network</th><th>Endpoint</th></tr>
+          <tr><td>SASE</td><td><span class="check">~</span></td><td><span class="cross">&mdash;</span></td><td><span class="cross">&mdash;</span></td></tr>
+          <tr><td>MCP Gateway</td><td><span class="cross">&mdash;</span></td><td><span class="check">~</span></td><td><span class="cross">&mdash;</span></td></tr>
+          <tr><td>EDR / XDR</td><td><span class="cross">&mdash;</span></td><td><span class="cross">&mdash;</span></td><td><span class="check">~</span></td></tr>
+          <tr><td style="color:var(--phthalo);font-weight:700;">Spectis</td><td><span class="check">&#10003;</span></td><td><span class="check">&#10003;</span></td><td><span class="check">&#10003;</span></td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section">
+  <h2>Built for the agentic era</h2>
+  <p>Spectis is open source. Deploy the endpoint scanner today. Ship telemetry to your SIEM tomorrow.</p>
+  <a href="https://github.com/bytebunkerlabs/spectis" class="btn-light">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+    Get started
+  </a>
+  <a href="#research" class="btn-ghost">Read the research</a>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="inner">
+    <div class="left">&copy; 2026 ByteBunker Labs</div>
+    <div class="links">
+      <a href="https://github.com/bytebunkerlabs">GitHub</a>
+      <a href="https://x.com/bytebunkerlabs">X / Twitter</a>
+      <a href="mailto:hello@bytebunkerlabs.ai">Contact</a>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
