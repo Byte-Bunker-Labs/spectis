@@ -36,7 +36,7 @@ orchestrator/logs/*.jsonl
 
 # Drafts & local files
 initial-draft-*
-bytebunkerlabs.html
+bytebunkerlabs*.html
 
 # OS
 .DS_Store
